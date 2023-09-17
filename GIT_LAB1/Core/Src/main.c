@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2022 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -61,6 +60,45 @@ static void MX_GPIO_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+
+const int redTime =5;
+const int yellowTime = 2;
+const int greenTime = 3;
+
+typedef enum LEDState {
+	off,on
+} eLEDState;
+
+typedef enum ColorState {
+	red, yellow, green
+} eColorState;
+
+void SwitchRed (eLEDState state){
+	if (state == on){
+		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET);
+	}
+	if (state == off) {
+		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
+	}
+}
+
+void SwitchYellow (eLEDState state){
+	if (state == on){
+		HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET);
+	}
+	if (state == off) {
+		HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
+	}
+}
+
+void SwitchGreen (eLEDState state){
+	if (state == on){
+		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET);
+	}
+	if (state == off) {
+		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
+	}
+}
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -90,22 +128,51 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Infinite loop */
+
   /* USER CODE BEGIN WHILE */
-  int counter =0;
+  // Set begin State
+  int counter = 0;
+  eColorState currentState = red;
+  // RED = 5 - // YELLOW = 2 // GREEN = 3
+
   while (1)
   {
-    /* USER CODE END WHILE */
-	  if(counter == 2) {
-	  		  HAL_GPIO_WritePin ( LED_RED_GPIO_Port , LED_RED_Pin , GPIO_PIN_SET );
-	  		  HAL_GPIO_WritePin ( LED_YELLOW_GPIO_Port , LED_YELLOW_Pin , GPIO_PIN_RESET );
+	  eColorState nextState;
+	  	  if (counter == 0){
+	  		  if (currentState == red) {
+	  			  //red to yellow
+	  			  nextState = yellow;
+	  			  counter = yellowTime;
+	  			  SwitchRed(off);
+	  			  SwitchYellow(on);
+	  			  SwitchGreen(off);
+	  		  }
+	  		  if (currentState == yellow) {
+	  			  //yellow to green
+	  			  nextState = green;
+	  			  counter = greenTime;
+	  			  SwitchRed(off);
+	  			  SwitchYellow(off);
+	  			  SwitchGreen(on);
+	  		  }
+	  		  if (currentState == green) {
+	  			  //green to red
+	  			  nextState = red;
+	  			  counter = redTime;
+	  			  SwitchRed(on);
+	  			  SwitchYellow(off);
+	  			  SwitchGreen(off);
+	  		  }
+
 	  	  }
-	  	  if (counter == 4){
-	  		  HAL_GPIO_WritePin ( LED_RED_GPIO_Port , LED_RED_Pin , GPIO_PIN_RESET );
-	  		  HAL_GPIO_WritePin ( LED_YELLOW_GPIO_Port , LED_YELLOW_Pin , GPIO_PIN_SET );
-	  		  counter = 0;
+
+	  	  if (counter > 0) {
+	  		  counter--;
 	  	  }
-	  	  counter++;
-	  	  HAL_Delay(1000);
+	  	  currentState = nextState;
+	  HAL_Delay(1000);
+	  /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -131,6 +198,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -159,10 +227,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin;
+  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin LED_GREEN_Pin */
+  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -205,5 +273,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
