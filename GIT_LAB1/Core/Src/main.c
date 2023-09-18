@@ -145,6 +145,10 @@ void Display7Seg(int num){
 		break;
 	}
 }
+
+typedef enum ColorState {
+	red, yellow, green
+} eColorState;
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -187,7 +191,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   int cnt=0;
-  int cnt2=0;
+  eColorState status = red;
     HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ; //turn off all led except for green_1 and red_2
     HAL_GPIO_TogglePin ( LED_YELLOW_1_GPIO_Port , LED_YELLOW_1_Pin ) ;
     HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
@@ -200,35 +204,46 @@ int main(void)
     HAL_GPIO_TogglePin(SEG_E_GPIO_Port, SEG_E_Pin);
     HAL_GPIO_TogglePin(SEG_F_GPIO_Port, SEG_F_Pin);
     HAL_GPIO_TogglePin(SEG_G_GPIO_Port, SEG_G_Pin);
+    int cnt1 = 1;
+    int cnt2 = 4;
+    int cnt3 = 2;
+
+
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(cnt2 >= 10) cnt2 = 0;
-	  Display7Seg(cnt2++);
-
+	  if(status == yellow) Display7Seg(cnt1--);
+	  if(status == red) Display7Seg(cnt2--);
+	  if(status == green) Display7Seg(cnt3--);
 	  switch(cnt){
-	 	  	case(3): //turn off green_1 and turn off yellow_1
+	 	  	case(3):
 	 	  			HAL_GPIO_TogglePin(LED_GREEN_1_GPIO_Port, LED_GREEN_1_Pin);
 	 	  			HAL_GPIO_TogglePin(LED_YELLOW_1_GPIO_Port , LED_YELLOW_1_Pin ) ;
 	 	  			cnt++;
 	 	  			break;
-	 	  	case(5): //turn off yellow_1, red_2 turn on red_1, green_2
+	 	  	case(5):
 	 	   			HAL_GPIO_TogglePin(LED_YELLOW_1_GPIO_Port , LED_YELLOW_1_Pin ) ;
 	 	  	 	 	HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ;
 	 	  	 	 	HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
 	 	  	 	 	HAL_GPIO_TogglePin ( LED_RED_2_GPIO_Port , LED_RED_2_Pin ) ;
 	 	  	 	 	cnt++;
+	 	  	 	 	status = green;
+	 	  	 	 	cnt2 =4;
 	 	  			break;
-	 	  	case(8): //turn off green_2 turn on yellow_2
+	 	  	case(8):
 	 	  			HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
 	 	  			cnt++;
+	 	  			status = yellow;
+	 	  			cnt3=2;
 	 	  			break;
-	 	  	case(10): //turn off yellow_2, red_1 turn on red_2, green_1
+	 	  	case(10):
 	 	  			HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_RED_2_GPIO_Port , LED_RED_2_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_GREEN_1_GPIO_Port , LED_GREEN_1_Pin ) ;
+	 	  			status =red;
+	 	  			cnt1 = 1;
 	 	  			cnt=1;
 	 	  			break;
 	 	  	default:
