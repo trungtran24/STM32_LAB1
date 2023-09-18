@@ -91,10 +91,44 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int cnt=0;
+    HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ; //turn off all led except for green_1 and red_2
+    HAL_GPIO_TogglePin ( LED_YELLOW_1_GPIO_Port , LED_YELLOW_1_Pin ) ;
+    HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
+    HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  switch(cnt){
+	  	case(3): //turn off green_1 and turn off yellow_1
+	  			HAL_GPIO_TogglePin(LED_GREEN_1_GPIO_Port, LED_GREEN_1_Pin);
+	  			HAL_GPIO_TogglePin(LED_YELLOW_1_GPIO_Port , LED_YELLOW_1_Pin ) ;
+	  			cnt++;
+	  			break;
+	  	case(5): //turn off yellow_1, red_2 turn on red_1, green_2
+	   			HAL_GPIO_TogglePin(LED_YELLOW_1_GPIO_Port , LED_YELLOW_1_Pin ) ;
+	  	 	 	HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ;
+	  	 	 	HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
+	  	 	 	HAL_GPIO_TogglePin ( LED_RED_2_GPIO_Port , LED_RED_2_Pin ) ;
+	  	 	 	cnt++;
+	  			break;
+	  	case(8): //turn off green_2 turn on yellow_2
+	  			HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
+	  			HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
+	  			cnt++;
+	  			break;
+	  	case(10): //turn off yellow_2, red_1 turn on red_2, green_1
+	  			HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
+	  			HAL_GPIO_TogglePin ( LED_RED_2_GPIO_Port , LED_RED_2_Pin ) ;
+	  			HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ;
+	  			HAL_GPIO_TogglePin ( LED_GREEN_1_GPIO_Port , LED_GREEN_1_Pin ) ;
+	  			cnt=1;
+	  			break;
+	  	default:
+	  			cnt++;
+	  			break;
+	  	}
+	  HAL_Delay (1000) ;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -148,10 +182,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin|LED_YELLOW_1_Pin|LED_GREEN_1_Pin|LED_RED_2_Pin
+                          |LED_YELLOW_2_Pin|LED_GREEN_2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin;
+  /*Configure GPIO pins : LED_RED_1_Pin LED_YELLOW_1_Pin LED_GREEN_1_Pin LED_RED_2_Pin
+                           LED_YELLOW_2_Pin LED_GREEN_2_Pin */
+  GPIO_InitStruct.Pin = LED_RED_1_Pin|LED_YELLOW_1_Pin|LED_GREEN_1_Pin|LED_RED_2_Pin
+                          |LED_YELLOW_2_Pin|LED_GREEN_2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
