@@ -204,9 +204,9 @@ int main(void)
     HAL_GPIO_TogglePin(SEG_E_GPIO_Port, SEG_E_Pin);
     HAL_GPIO_TogglePin(SEG_F_GPIO_Port, SEG_F_Pin);
     HAL_GPIO_TogglePin(SEG_G_GPIO_Port, SEG_G_Pin);
-    int cnt1 = 1;
-    int cnt2 = 4;
-    int cnt3 = 2;
+    int cnt1 = 2;
+    int cnt2 = 5;
+    int cnt3 = 3;
 
 
   while (1)
