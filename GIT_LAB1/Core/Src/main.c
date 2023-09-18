@@ -92,6 +92,17 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   int counter=0;
+  	  	  	  HAL_GPIO_TogglePin(LED_11_GPIO_Port, LED_11_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_10_GPIO_Port, LED_10_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_9_GPIO_Port, LED_9_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_8_GPIO_Port, LED_8_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_7_GPIO_Port, LED_7_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_6_GPIO_Port, LED_6_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_5_GPIO_Port, LED_5_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_4_GPIO_Port, LED_4_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_3_GPIO_Port, LED_3_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
+  		  	  HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -102,7 +113,7 @@ int main(void)
 	  switch(counter){
 	  case 12:
 	 		  HAL_GPIO_TogglePin(LED_12_GPIO_Port, LED_12_Pin);
-	 		  HAL_GPIO_TogglePin(LED_10_GPIO_Port, LED_10_Pin);
+	 		  HAL_GPIO_TogglePin(LED_11_GPIO_Port, LED_11_Pin);
 	 		  break;
 	  case 11:
 	  		  HAL_GPIO_TogglePin(LED_11_GPIO_Port, LED_11_Pin);
@@ -149,17 +160,6 @@ int main(void)
 	 		  HAL_GPIO_TogglePin(LED_12_GPIO_Port, LED_12_Pin);
 	 		  break;
 	  default:
-		  	  HAL_GPIO_TogglePin(LED_11_GPIO_Port, LED_11_Pin);
-		  	  HAL_GPIO_TogglePin(LED_10_GPIO_Port, LED_10_Pin);
-		  	  HAL_GPIO_TogglePin(LED_9_GPIO_Port, LED_9_Pin);
-		  	  HAL_GPIO_TogglePin(LED_8_GPIO_Port, LED_8_Pin);
-		  	  HAL_GPIO_TogglePin(LED_7_GPIO_Port, LED_7_Pin);
-		  	  HAL_GPIO_TogglePin(LED_6_GPIO_Port, LED_6_Pin);
-		  	  HAL_GPIO_TogglePin(LED_5_GPIO_Port, LED_5_Pin);
-		  	  HAL_GPIO_TogglePin(LED_4_GPIO_Port, LED_4_Pin);
-		  	  HAL_GPIO_TogglePin(LED_3_GPIO_Port, LED_3_Pin);
-		  	  HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
-		  	  HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
 		  	  break;
 	  }
 	  if(counter>=12) counter=1;
