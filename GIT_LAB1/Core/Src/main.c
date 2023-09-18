@@ -228,23 +228,23 @@ int main(void)
 	 	  	 	 	HAL_GPIO_TogglePin ( LED_RED_2_GPIO_Port , LED_RED_2_Pin ) ;
 	 	  	 	 	cnt++;
 	 	  	 	 	status = green;
-	 	  	 	 	cnt2 =4;
+	 	  	 	 	cnt2 =5;
 	 	  			break;
-	 	  	case(8):
+	 	  	case(9):
 	 	  			HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_GREEN_2_GPIO_Port , LED_GREEN_2_Pin ) ;
 	 	  			cnt++;
 	 	  			status = yellow;
-	 	  			cnt3=2;
+	 	  			cnt3=3;
 	 	  			break;
-	 	  	case(10):
+	 	  	case(12):
 	 	  			HAL_GPIO_TogglePin ( LED_YELLOW_2_GPIO_Port , LED_YELLOW_2_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_RED_2_GPIO_Port , LED_RED_2_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_RED_1_GPIO_Port , LED_RED_1_Pin ) ;
 	 	  			HAL_GPIO_TogglePin ( LED_GREEN_1_GPIO_Port , LED_GREEN_1_Pin ) ;
 	 	  			status =red;
-	 	  			cnt1 = 1;
-	 	  			cnt=1;
+	 	  			cnt1 = 2;
+	 	  			cnt=0;
 	 	  			break;
 	 	  	default:
 	 	  			cnt++;
